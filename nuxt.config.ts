@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { fileURLToPath } from "url";
+
 export default defineNuxtConfig({
   pages: true,
   devtools: { enabled: true },
@@ -14,5 +16,8 @@ export default defineNuxtConfig({
   },
   nitro: {
     plugins: ["~/server/plugins/mongodb.ts"],
+  },
+  alias: {
+    "@models": fileURLToPath(new URL("./models/", import.meta.url)),
   },
 });
