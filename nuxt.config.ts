@@ -9,15 +9,17 @@ export default defineNuxtConfig({
     "shadcn-nuxt",
     "@pinia/nuxt",
     "@vueuse/nuxt",
+    "nuxt-icon",
   ],
   shadcn: {
     prefix: "",
-    componentDir: "./components/ui",
+    componentDir: "./components/shadcn",
   },
   nitro: {
     plugins: ["~/server/plugins/mongodb.ts"],
   },
   alias: {
     "@models": fileURLToPath(new URL("./models/", import.meta.url)),
+    "@blocks": fileURLToPath(new URL("./components/blocks", import.meta.url)),
   },
 });
