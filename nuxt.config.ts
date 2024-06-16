@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@vueuse/nuxt",
     "nuxt-icon",
+    "@nuxtjs/supabase",
   ],
   shadcn: {
     prefix: "",
@@ -21,5 +22,8 @@ export default defineNuxtConfig({
   alias: {
     "@models": fileURLToPath(new URL("./models/", import.meta.url)),
     "@blocks": fileURLToPath(new URL("./components/blocks", import.meta.url)),
+  },
+  supabase: {
+    redirect: false,
   },
 });

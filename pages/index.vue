@@ -1,4 +1,4 @@
-<template><Button @click="submit"> Add User </Button></template>
+<!-- <template><Button @click="submit"> Add User </Button></template>
 
 <script setup lang="ts">
 async function submit() {
@@ -18,4 +18,20 @@ async function submit() {
     console.error(body.error);
   }
 }
+</script> -->
+<template>
+  <div>
+    <h1> Welcome, {{ user }} </h1>
+  </div>
+</template>
+
+<script lang="ts" setup>
+
+const user = useSupabaseUser();
+const router = useRouter();
+
+if (!user) {
+  router.push("/login");
+}
+
 </script>
