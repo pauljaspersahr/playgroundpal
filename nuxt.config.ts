@@ -26,4 +26,12 @@ export default defineNuxtConfig({
   supabase: {
     redirect: false,
   },
+  runtimeConfig: {
+    public: {
+      BASE_URL:
+        process.env.STAGE === "DEV"
+          ? "http://localhost:3000"
+          : process.env.VERCEL_URL,
+    },
+  },
 });

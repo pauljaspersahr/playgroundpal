@@ -5,14 +5,18 @@ const user = useSupabaseUser();
 const loading = ref(false);
 const email = ref("");
 
+console.log(useRuntimeConfig().public.BASE_URL);
+
 const handleLogin = async () => {
   try {
     loading.value = true;
+    console.log("login");
+    console.log(useRuntimeConfig().public.BASE_URL);
     const { error } = await supabase.auth.signInWithOtp({
       email: email.value,
       options: {
         shouldCreateUser: true,
-        emailRedirectTo: process.env.DEV ? "http://localhost:3000/login" : process.dev.VERCEL_URL,
+        emailRedirectTo: useRuntimeConfig().public.BASE_URL
       },
     });
     if (error) throw error;
@@ -27,7 +31,7 @@ const handleLogin = async () => {
 const handleLogout = async () => {
   try {
     loading.value = true;
-    const { error } = await supabase.auth.signOut({ redirectTo: process.env.DEV ? "http://localhost:3000/login" : process.dev.VERCEL_URL + "/login" });
+    const { error } = await supabase.auth.signOut({ redirectTo: useRuntimeConfig().public.BASE_URL + "/login" });
     if (error) throw error;
   } catch (error) {
     alert(error.error_description || error.message);
@@ -48,7 +52,8 @@ const handleLogout = async () => {
     <CardContent class="grid gap-4">
       <div class="grid gap-2">
         <Label for="email">Email</Label>
-        <Input id="email" type="email" placeholder="Email" required v-model="email" :disabled="loading" />
+        <Input class="w-full" id="email" type="email" placeholder="Email" required v-model="email"
+          :disabled="loading" />
       </div>
     </CardContent>
     <CardFooter>
