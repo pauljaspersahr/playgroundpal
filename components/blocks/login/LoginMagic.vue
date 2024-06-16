@@ -12,7 +12,7 @@ const handleLogin = async () => {
       email: email.value,
       options: {
         shouldCreateUser: true,
-        emailRedirectTo: "http://localhost:3000/",
+        emailRedirectTo: process.env.DEV ? "http://localhost:3000/login" : process.dev.VERCEL_URL,
       },
     });
     if (error) throw error;
@@ -27,7 +27,7 @@ const handleLogin = async () => {
 const handleLogout = async () => {
   try {
     loading.value = true;
-    const { error } = await supabase.auth.signOut({ redirectTo: "http://localhost:3000/login" });
+    const { error } = await supabase.auth.signOut({ redirectTo: process.env.DEV ? "http://localhost:3000/login" : process.dev.VERCEL_URL + "/login" });
     if (error) throw error;
   } catch (error) {
     alert(error.error_description || error.message);
