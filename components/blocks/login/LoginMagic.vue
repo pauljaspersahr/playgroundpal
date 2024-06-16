@@ -1,5 +1,6 @@
 <script setup>
 const supabase = useSupabaseClient();
+const user = useSupabaseUser();
 
 const loading = ref(false);
 const email = ref("");
@@ -22,10 +23,22 @@ const handleLogin = async () => {
     loading.value = false;
   }
 };
+
+const handleLogout = async () => {
+  try {
+    loading.value = true;
+    const { error } = await supabase.auth.signOut({ redirectTo: "http://localhost:3000/login" });
+    if (error) throw error;
+  } catch (error) {
+    alert(error.error_description || error.message);
+  } finally {
+    loading.value = false;
+  }
+};
 </script>
 
 <template>
-  <Card class="w-full max-w-sm">
+  <Card v-if="!user" class="w-full max-w-sm">
     <CardHeader>
       <CardTitle class="text-2xl"> Login </CardTitle>
       <CardDescription>
@@ -40,6 +53,19 @@ const handleLogin = async () => {
     </CardContent>
     <CardFooter>
       <Button class="w-full" @click="handleLogin"> Send Login Link</Button>
+    </CardFooter>
+  </Card>
+
+  <Card v-else class="w-full max-w-sm">
+    <CardHeader>
+      <CardTitle class="text-2xl"> Not You?</CardTitle>
+      <CardDescription>
+        Logged in as <strong>{{ user.email }}</strong>
+      </CardDescription>
+    </CardHeader>
+    <CardFooter class="flex justify-evenly px-6 pb-6">
+      <Button variant="destructive" @click="handleLogout"> Logout </Button>
+      <NuxtLink to="/"><Button> Resume </Button></NuxtLink>
     </CardFooter>
   </Card>
 </template>

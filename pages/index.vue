@@ -30,7 +30,7 @@ async function submit() {
 const user = useSupabaseUser();
 const router = useRouter();
 
-if (!user) {
+if (!user.value) {
   router.push("/login");
 }
 
