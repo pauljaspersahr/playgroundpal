@@ -5,13 +5,9 @@ const user = useSupabaseUser();
 const loading = ref(false);
 const email = ref("");
 
-console.log(useRuntimeConfig().public.BASE_URL);
-
 const handleLogin = async () => {
   try {
     loading.value = true;
-    console.log("login");
-    console.log(useRuntimeConfig().public.BASE_URL);
     const { error } = await supabase.auth.signInWithOtp({
       email: email.value,
       options: {

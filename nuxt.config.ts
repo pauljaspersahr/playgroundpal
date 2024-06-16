@@ -31,7 +31,7 @@ export default defineNuxtConfig({
       BASE_URL:
         process.env.STAGE === "DEV"
           ? "http://localhost:3000"
-          : "https://" + process.env.VERCEL_URL,
+          : "https://playgroundpal.vercel.app",
     },
   },
 });
